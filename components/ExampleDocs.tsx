@@ -14,13 +14,247 @@ type DocPage =
   | 'versioning' 
   | 'seo' 
   | 'customization' 
-  | 'api-reference';
+  | 'api-reference'
+  | 'custom-domains';
 
 interface ExampleDocsProps {
   theme: 'dark' | 'light';
   isGithubConnected?: boolean;
   selectedRepo?: string | null;
 }
+
+const VersionSwitcher: React.FC<{ current: string; onSelect: (v: string) => void }> = ({ current, onSelect }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const versions = [
+    { id: 'v2.4.0', label: 'v2.4.0', tag: 'Latest' },
+    { id: 'v2.3.1', label: 'v2.3.1', tag: 'Stable' },
+    { id: 'v1.x', label: 'v1.x', tag: 'Legacy' },
+  ];
+
+  return (
+    <div className="relative mb-8">
+      <button 
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full flex items-center justify-between px-3 py-2.5 bg-white dark:bg-zinc-800/50 border border-zinc-200 dark:border-white/10 rounded-xl hover:border-indigo-500/50 transition-all shadow-sm group"
+      >
+        <div className="flex items-center gap-2">
+          <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
+          <span className="text-xs font-bold text-zinc-900 dark:text-zinc-200">{current}</span>
+          {versions.find(v => v.id === current)?.tag === 'Latest' && (
+             <span className="text-[9px] px-1.5 py-0.5 bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 rounded-md font-black uppercase tracking-tighter">Latest</span>
+          )}
+        </div>
+        <svg className={`w-4 h-4 text-zinc-400 group-hover:text-zinc-600 transition-transform ${isOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+      </button>
+
+      {isOpen && (
+        <>
+          <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />
+          <div className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-xl shadow-2xl z-50 overflow-hidden animate-in zoom-in-95 duration-200">
+            {versions.map((v) => (
+              <button
+                key={v.id}
+                onClick={() => { onSelect(v.id); setIsOpen(false); }}
+                className={`w-full px-4 py-3 text-left text-xs flex items-center justify-between hover:bg-zinc-50 dark:hover:bg-white/5 transition-colors ${current === v.id ? 'bg-indigo-50/50 dark:bg-indigo-500/5' : ''}`}
+              >
+                <span className={`font-bold ${current === v.id ? 'text-indigo-600 dark:text-indigo-400' : 'text-zinc-600 dark:text-zinc-400'}`}>{v.label}</span>
+                <span className="text-[9px] text-zinc-400 uppercase tracking-widest">{v.tag}</span>
+              </button>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
+
+const DomainManager: React.FC = () => {
+  const [domain, setDomain] = useState('');
+  const [step, setStep] = useState<'idle' | 'verifying' | 'dns' | 'success'>('idle');
+  const [progress, setProgress] = useState(0);
+
+  const handleConnect = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!domain) return;
+    setStep('verifying');
+    setProgress(0);
+  };
+
+  useEffect(() => {
+    if (step === 'verifying') {
+      const interval = setInterval(() => {
+        setProgress(prev => {
+          if (prev >= 100) {
+            clearInterval(interval);
+            setStep('dns');
+            return 100;
+          }
+          return prev + 5;
+        });
+      }, 100);
+      return () => clearInterval(interval);
+    }
+  }, [step]);
+
+  const handleConfirmDNS = () => {
+    setStep('verifying');
+    setProgress(0);
+    setTimeout(() => setStep('success'), 2000);
+  };
+
+  return (
+    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
+      <div className="flex flex-col md:flex-row gap-6 items-start justify-between">
+        <div className="max-w-md">
+          <h3 className="text-xl font-bold text-zinc-900 dark:text-white mb-2">Connect your brand.</h3>
+          <p className="text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed">
+            Professional documentation deserves a professional home. Connect your custom domain in seconds with automatic SSL certificates and global edge delivery.
+          </p>
+        </div>
+        <div className="flex gap-2">
+          <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 text-[10px] font-bold uppercase tracking-wider border border-emerald-500/20">SSL included</span>
+          <span className="px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-600 text-[10px] font-bold uppercase tracking-wider border border-indigo-500/20">Any Provider</span>
+        </div>
+      </div>
+
+      <div className="max-w-2xl mx-auto">
+        <div className="p-8 rounded-[2rem] border border-zinc-200 dark:border-white/10 bg-white dark:bg-zinc-900/50 shadow-2xl relative overflow-hidden transition-all duration-500">
+          {step === 'idle' && (
+            <form onSubmit={handleConnect} className="space-y-8 py-4">
+              <div className="text-center space-y-2">
+                <div className="w-16 h-16 bg-indigo-500/10 text-indigo-500 rounded-3xl flex items-center justify-center mx-auto mb-4 border border-indigo-500/20 shadow-inner">
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9-9c1.657 0 3 3.582 3 8s-1.343 8-3 8m0-16c-1.657 0-3 3.582-3 8s1.343 8 3 8m0-16H9m12 0H15" /></svg>
+                </div>
+                <h4 className="text-xl font-bold text-zinc-900 dark:text-white">What's your domain?</h4>
+                <p className="text-sm text-zinc-500">We'll provide the DNS records needed to point it to DocuGen.</p>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <div className="relative flex-1">
+                  <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+                    <span className="text-zinc-400 text-sm">https://</span>
+                  </div>
+                  <input 
+                    type="text" 
+                    placeholder="docs.yourcompany.com"
+                    value={domain}
+                    onChange={(e) => setDomain(e.target.value)}
+                    className="w-full bg-zinc-100 dark:bg-black/40 border border-zinc-200 dark:border-white/10 rounded-2xl pl-16 pr-4 py-4 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all shadow-inner"
+                  />
+                </div>
+                <button type="submit" className="bg-zinc-900 dark:bg-white text-white dark:text-black px-8 py-4 rounded-2xl text-sm font-bold hover:opacity-90 active:scale-95 transition-all shadow-lg">
+                  Connect
+                </button>
+              </div>
+              <div className="flex items-center justify-center gap-6 pt-4 grayscale opacity-40">
+                 <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg" className="h-4" alt="AWS" />
+                 <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Google_Cloud_Logo.svg" className="h-4" alt="GCP" />
+                 <img src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Cloudflare_logo.svg" className="h-4" alt="Cloudflare" />
+              </div>
+            </form>
+          )}
+
+          {step === 'verifying' && (
+            <div className="py-16 text-center space-y-6 animate-in zoom-in-95 duration-500">
+              <div className="relative w-20 h-20 mx-auto">
+                <svg className="w-full h-full transform -rotate-90">
+                  <circle cx="40" cy="40" r="36" stroke="currentColor" strokeWidth="8" fill="transparent" className="text-zinc-100 dark:text-white/5" />
+                  <circle cx="40" cy="40" r="36" stroke="currentColor" strokeWidth="8" fill="transparent" strokeDasharray={226} strokeDashoffset={226 - (226 * progress) / 100} className="text-indigo-500 transition-all duration-300 ease-linear" />
+                </svg>
+                <div className="absolute inset-0 flex items-center justify-center">
+                   <span className="text-xs font-bold text-zinc-900 dark:text-white">{progress}%</span>
+                </div>
+              </div>
+              <div className="space-y-1">
+                <p className="text-lg font-bold text-zinc-900 dark:text-white">Configuring Edge Nodes...</p>
+                <p className="text-xs text-zinc-500">Assigning unique IP addresses and preparing SSL certificates.</p>
+              </div>
+            </div>
+          )}
+
+          {step === 'dns' && (
+            <div className="space-y-6 animate-in slide-in-from-bottom-4 duration-500">
+              <div className="flex items-center justify-between">
+                <h4 className="font-bold text-zinc-900 dark:text-white">DNS Configuration</h4>
+                <span className="text-[10px] font-black bg-amber-500/10 text-amber-600 px-2 py-1 rounded uppercase">Verification Required</span>
+              </div>
+              <p className="text-xs text-zinc-500 leading-relaxed">Add these records to your DNS provider (Cloudflare, Route53, GoDaddy, etc.) to verify ownership of <span className="text-zinc-900 dark:text-zinc-200 font-bold">{domain}</span>.</p>
+              
+              <div className="space-y-4">
+                <div className="p-6 rounded-2xl bg-zinc-100 dark:bg-black/60 border border-zinc-200 dark:border-white/5 shadow-inner">
+                   <div className="grid grid-cols-4 gap-4 text-[10px] font-black text-zinc-400 uppercase tracking-widest mb-3">
+                      <div className="col-span-1">Type</div>
+                      <div className="col-span-1">Name</div>
+                      <div className="col-span-2">Content / Value</div>
+                   </div>
+                   <div className="grid grid-cols-4 gap-4 text-xs font-mono items-center">
+                      <div className="col-span-1 text-zinc-900 dark:text-indigo-400 font-bold">CNAME</div>
+                      <div className="col-span-1 text-zinc-600 dark:text-zinc-400 truncate">{domain.split('.')[0]}</div>
+                      <div className="col-span-2 flex items-center justify-between bg-white dark:bg-white/5 px-3 py-2 rounded-lg border border-zinc-200 dark:border-white/5">
+                        <span className="text-zinc-900 dark:text-zinc-200 truncate">cname.docugen.io</span>
+                        <button className="text-zinc-400 hover:text-indigo-500"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                      </div>
+                   </div>
+                </div>
+                
+                <div className="p-4 rounded-xl bg-indigo-500/5 border border-indigo-500/10 flex gap-3 items-start">
+                   <svg className="w-5 h-5 text-indigo-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                   <p className="text-[11px] text-zinc-600 dark:text-zinc-400 leading-relaxed">Propagating DNS changes can take up to 24 hours, but usually happens in under 5 minutes. We'll automatically retry verification in the background.</p>
+                </div>
+              </div>
+
+              <div className="flex gap-3">
+                <button 
+                  onClick={handleConfirmDNS}
+                  className="flex-1 bg-indigo-600 text-white py-4 rounded-2xl font-bold text-sm hover:bg-indigo-700 active:scale-[0.98] transition-all shadow-lg shadow-indigo-600/20"
+                >
+                  Confirm DNS Changes
+                </button>
+                <button onClick={() => setStep('idle')} className="px-6 py-4 rounded-2xl border border-zinc-200 dark:border-white/10 text-zinc-600 dark:text-zinc-400 font-bold text-sm hover:bg-zinc-50 dark:hover:bg-white/5 transition-all">
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
+
+          {step === 'success' && (
+            <div className="py-8 text-center space-y-8 animate-in slide-in-from-bottom-8 duration-700">
+              <div className="relative">
+                <div className="w-20 h-20 bg-emerald-500 text-white rounded-[2rem] flex items-center justify-center mx-auto shadow-2xl shadow-emerald-500/40 relative z-10">
+                  <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
+                </div>
+                <div className="absolute inset-0 bg-emerald-500/20 blur-2xl rounded-full animate-pulse"></div>
+              </div>
+              
+              <div className="space-y-2">
+                <h4 className="text-2xl font-bold text-zinc-900 dark:text-white">Domain Verified & Live!</h4>
+                <p className="text-sm text-zinc-500">Traffic is now being routed through our global edge network.</p>
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-zinc-100 dark:bg-white/5 rounded-2xl border border-zinc-200 dark:border-white/10 mt-4">
+                   <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
+                   <span className="text-xs font-mono font-bold text-indigo-500 dark:text-indigo-400">{domain}</span>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 max-w-sm mx-auto pt-4">
+                 <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-black/40 border border-zinc-100 dark:border-white/5 flex flex-col items-center">
+                    <span className="text-[10px] font-black text-zinc-400 uppercase tracking-widest mb-1">SSL Status</span>
+                    <span className="text-[10px] font-bold text-emerald-500 uppercase">Secure</span>
+                 </div>
+                 <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-black/40 border border-zinc-100 dark:border-white/5 flex flex-col items-center">
+                    <span className="text-[10px] font-black text-zinc-400 uppercase tracking-widest mb-1">Latency</span>
+                    <span className="text-[10px] font-bold text-indigo-500 uppercase">12ms avg</span>
+                 </div>
+              </div>
+
+              <button onClick={() => setStep('idle')} className="text-xs text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors underline underline-offset-4 decoration-zinc-300">
+                Manage another domain
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const DesignCustomizer: React.FC = () => {
   const [primaryColor, setPrimaryColor] = useState('#6366f1');
@@ -251,6 +485,7 @@ export const ExampleDocs: React.FC<ExampleDocsProps> = ({ theme, isGithubConnect
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [viewMode, setViewMode] = useState<'rendered' | 'source'>('rendered');
+  const [version, setVersion] = useState('v2.4.0');
 
   const pages: Record<DocPage, { title: string, category: string, content: React.ReactNode, source: string }> = {
     introduction: {
@@ -387,6 +622,12 @@ export const ExampleDocs: React.FC<ExampleDocsProps> = ({ theme, isGithubConnect
       title: 'Custom Themes',
       source: `# Customization\n\nMake your docs look exactly like your brand.\n\n- **Primary Color**: Select your brand color.\n- **Typography**: Choose a font family that fits your style.\n- **Live Preview**: See changes instantly in our design editor.`,
       content: <DesignCustomizer />
+    },
+    'custom-domains': {
+      category: 'Design',
+      title: 'Custom Domains',
+      source: `# Custom Domains\n\nConnect your own brand to your documentation.\n\n- Automatic SSL certificates via Let's Encrypt.\n- Global edge delivery for lightning fast speeds.\n- Easy DNS management.`,
+      content: <DomainManager />
     },
     'api-reference': {
       category: 'Advanced',
@@ -557,6 +798,15 @@ export const ExampleDocs: React.FC<ExampleDocsProps> = ({ theme, isGithubConnect
     setTimeout(() => setIsSearching(false), 800);
   };
 
+  const handleVersionChange = (newVersion: string) => {
+    // Simulate content change with a brief fade
+    setIsSearching(true);
+    setTimeout(() => {
+      setVersion(newVersion);
+      setIsSearching(false);
+    }, 400);
+  };
+
   return (
     <section id="live-demo" className="py-24 md:py-32 relative z-10 overflow-hidden scroll-mt-32">
       <div className="container mx-auto px-4">
@@ -623,6 +873,8 @@ export const ExampleDocs: React.FC<ExampleDocsProps> = ({ theme, isGithubConnect
           <div className="flex min-h-[600px]">
             {/* Sidebar */}
             <aside className="w-64 border-r border-zinc-200 dark:border-white/5 p-8 bg-zinc-50 dark:bg-zinc-900/40 hidden md:block overflow-y-auto max-h-[600px] scrollbar-hide">
+              <VersionSwitcher current={version} onSelect={handleVersionChange} />
+              
               {['Getting Started', 'Core Concepts', 'Design', 'Advanced', 'Ecosystem'].map((category) => (
                 <div key={category} className="mb-8">
                   <div className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest mb-4">{category}</div>
@@ -654,27 +906,33 @@ export const ExampleDocs: React.FC<ExampleDocsProps> = ({ theme, isGithubConnect
                    <div className="text-xs font-bold text-indigo-600 dark:text-indigo-500 uppercase tracking-wider">{pages[activePage].category}</div>
                    <span className="text-zinc-300 dark:text-zinc-700">/</span>
                    <div className="text-xs font-medium text-zinc-400 dark:text-zinc-600">{pages[activePage].title}</div>
+                   <span className="text-zinc-300 dark:text-zinc-700">/</span>
+                   <div className="text-xs font-bold text-zinc-300 dark:text-zinc-600 px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800">{version}</div>
                 </div>
                 <div className="flex items-center bg-zinc-100 dark:bg-white/5 rounded-xl p-1 border border-zinc-200 dark:border-white/10 shadow-inner">
-                  <button 
-                    onClick={() => setViewMode('rendered')}
-                    className={`px-4 py-1.5 text-[10px] font-bold rounded-lg transition-all ${viewMode === 'rendered' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20' : 'text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-300'}`}
-                  >
-                    PREVIEW
-                  </button>
                   <button 
                     onClick={() => setViewMode('source')}
                     className={`px-4 py-1.5 text-[10px] font-bold rounded-lg transition-all ${viewMode === 'source' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20' : 'text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-300'}`}
                   >
                     MARKDOWN
                   </button>
+                  <button 
+                    onClick={() => setViewMode('rendered')}
+                    className={`px-4 py-1.5 text-[10px] font-bold rounded-lg transition-all flex items-center gap-2 ${viewMode === 'rendered' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20' : 'text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-300'}`}
+                  >
+                    <div className={`w-1.5 h-1.5 rounded-full ${viewMode === 'rendered' ? 'bg-white animate-pulse' : 'bg-zinc-400'}`}></div>
+                    LIVE PREVIEW
+                  </button>
                 </div>
               </div>
 
-              <div className="animate-in fade-in duration-500" key={activePage + viewMode}>
+              <div className="animate-in fade-in duration-500" key={activePage + viewMode + version}>
                 {viewMode === 'rendered' ? (
                   <>
-                    <h1 className="text-4xl font-extrabold text-zinc-900 dark:text-white mb-8 tracking-tight">{pages[activePage].title}</h1>
+                    <h1 className="text-4xl font-extrabold text-zinc-900 dark:text-white mb-8 tracking-tight">
+                      {pages[activePage].title}
+                      {version !== 'v2.4.0' && <span className="ml-4 text-sm font-normal text-zinc-400 italic">(Legacy Version)</span>}
+                    </h1>
                     <div className="prose dark:prose-invert max-w-none prose-headings:text-zinc-900 dark:prose-headings:text-white prose-p:text-zinc-600 dark:prose-p:text-zinc-400 prose-strong:text-zinc-900 dark:prose-strong:text-white">
                       {pages[activePage].content}
                     </div>
@@ -692,7 +950,7 @@ export const ExampleDocs: React.FC<ExampleDocsProps> = ({ theme, isGithubConnect
                    <div className="w-4 h-4 rounded-full bg-emerald-500/20 flex items-center justify-center">
                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
                    </div>
-                   Generated by DocuGen AI v2.4
+                   Generated by DocuGen AI v2.4 ({version})
                 </div>
                 <div className="flex gap-6">
                   <button className="hover:text-zinc-900 dark:hover:text-white transition-colors flex items-center gap-1.5">

@@ -17,10 +17,11 @@ export const Navbar: React.FC<NavbarProps> = ({ toggleTheme, theme }) => {
           <span className="text-xl font-bold tracking-tight text-zinc-900 dark:text-white">DocuGen</span>
         </div>
         
-        <div className="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-500 dark:text-zinc-400">
-          <a href="#live-demo" className="hover:text-zinc-900 dark:hover:text-white transition-colors">Example Docs</a>
-          <a href="#how-it-works" className="hover:text-zinc-900 dark:hover:text-white transition-colors">How it works</a>
+        <div className="hidden md:flex items-center gap-6 text-xs font-bold uppercase tracking-widest text-zinc-500 dark:text-zinc-500">
+          <a href="#live-demo" className="hover:text-zinc-900 dark:hover:text-white transition-colors">Demo</a>
           <a href="#features" className="hover:text-zinc-900 dark:hover:text-white transition-colors">Features</a>
+          <a href="#comparison" className="hover:text-zinc-900 dark:hover:text-white transition-colors">Comparison</a>
+          <a href="#faq" className="hover:text-zinc-900 dark:hover:text-white transition-colors">FAQ</a>
           <a href="#pricing" className="hover:text-zinc-900 dark:hover:text-white transition-colors">Pricing</a>
         </div>
 

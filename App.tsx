@@ -5,7 +5,9 @@ import { Hero } from './components/Hero';
 import { HowItWorks } from './components/HowItWorks';
 import { ExampleDocs } from './components/ExampleDocs';
 import { Features } from './components/Features';
+import { Comparison } from './components/Comparison';
 import { Testimonials } from './components/Testimonials';
+import { FAQ } from './components/FAQ';
 import { Pricing } from './components/Pricing';
 import { SignupForm } from './components/SignupForm';
 import { Footer } from './components/Footer';
@@ -76,7 +78,9 @@ const App: React.FC = () => {
           />
           <HowItWorks />
           <Features />
+          <Comparison />
           <Testimonials />
+          <FAQ />
           <Pricing />
           <SignupForm />
         </main>
