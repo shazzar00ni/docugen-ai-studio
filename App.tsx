@@ -52,11 +52,11 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen selection:bg-indigo-500/30 relative bg-zinc-50 dark:bg-[#0a0a0a] scroll-smooth transition-colors duration-300">
+    <div className="min-h-screen selection:bg-indigo-500/30 relative bg-zinc-50 dark:bg-[#0a0a0a] scroll-smooth transition-colors duration-300 overflow-x-hidden">
       {/* Background Layer */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-indigo-500/5 dark:bg-indigo-500/10 blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-blue-500/5 dark:bg-blue-500/10 blur-[120px]" />
+        <div className="absolute top-[-10%] left-[-5%] w-[60%] h-[60%] rounded-full bg-indigo-500/5 dark:bg-indigo-500/10 blur-[140px] opacity-70" />
+        <div className="absolute bottom-[-10%] right-[-5%] w-[60%] h-[60%] rounded-full bg-blue-500/5 dark:bg-blue-500/10 blur-[140px] opacity-70" />
         <BackgroundDots count={300} theme={theme} />
       </div>
       

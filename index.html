@@ -26,28 +26,34 @@
         body {
             font-family: 'Inter', sans-serif;
             transition: background-color 0.3s ease, color 0.3s ease;
+            -webkit-font-smoothing: antialiased;
         }
         .mono {
             font-family: 'JetBrains Mono', monospace;
         }
         .gradient-text {
             background: linear-gradient(135deg, #111 0%, #444 100%);
+            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            color: transparent;
+            display: inline-block;
         }
         .dark .gradient-text {
             background: linear-gradient(135deg, #fff 0%, #888 100%);
+            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .glass {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
         .light .glass {
-            background: rgba(255, 255, 255, 0.7);
-            border: 1px solid rgba(0, 0, 0, 0.05);
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.08);
         }
         @keyframes fade-in {
             from { opacity: 0; }
@@ -86,8 +92,10 @@
   }
 }
 </script>
+<link rel="stylesheet" href="/index.css">
 </head>
 <body class="bg-zinc-50 dark:bg-[#0a0a0a] text-zinc-900 dark:text-[#ededed]">
     <div id="root"></div>
+<script type="module" src="/index.tsx"></script>
 </body>
 </html>

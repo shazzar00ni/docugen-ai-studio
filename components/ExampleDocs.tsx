@@ -1,5 +1,9 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
+import { Code2, Copy, Check, Terminal, Globe, Cpu } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Code2, Copy, Check, Terminal, Globe, Cpu } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 
 type DocPage = 
   | 'introduction' 
@@ -385,6 +389,8 @@ const InteractiveAPI: React.FC = () => {
   const [endpoint, setEndpoint] = useState('/v1/auth/session');
   const [isLoading, setIsLoading] = useState(false);
   const [response, setResponse] = useState<any>(null);
+  const [selectedLang, setSelectedLang] = useState<'javascript' | 'python' | 'curl'>('javascript');
+  const [copied, setCopied] = useState(false);
 
   const handleExecute = () => {
     setIsLoading(true);
@@ -401,31 +407,78 @@ const InteractiveAPI: React.FC = () => {
     }, 800);
   };
 
+  const getCodeSnippet = (lang: string) => {
+    const fullUrl = `https://api.docugen.io${endpoint}`;
+    switch (lang) {
+      case 'javascript':
+        return `const response = await fetch('${fullUrl}', {
+  method: '${method}',
+  headers: {
+    'Authorization': 'Bearer YOUR_TOKEN',
+    'Content-Type': 'application/json'
+  }${method !== 'GET' ? `,\n  body: JSON.stringify({ /* data */ })` : ''}
+});
+const data = await response.json();
+console.log(data);`;
+      case 'python':
+        return `import requests
+
+url = "${fullUrl}"
+headers = {
+    "Authorization": "Bearer YOUR_TOKEN",
+    "Content-Type": "application/json"
+}
+
+response = requests.${method.toLowerCase()}(url, headers=headers${method !== 'GET' ? ', json={}' : ''})
+print(response.json())`;
+      case 'curl':
+        return `curl -X ${method} "${fullUrl}" \\
+  -H "Authorization: Bearer YOUR_TOKEN" \\
+  -H "Content-Type: application/json" ${method !== 'GET' ? '\\\n  -d \'{}\'' : ''}`;
+      default:
+        return '';
+    }
+  };
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(getCodeSnippet(selectedLang));
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <div className="space-y-6">
       <p className="text-zinc-600 dark:text-zinc-400">
-        Generate stunning API references from your code. Use the interactive console below to test our mock authentication endpoint.
+        Generate stunning API references from your code. Use the interactive console below to test our mock authentication endpoint and get ready-to-use code snippets.
       </p>
       
       <div className="rounded-2xl border border-zinc-200 dark:border-white/10 bg-white dark:bg-black/40 overflow-hidden shadow-xl">
         {/* Request Header */}
         <div className="px-5 py-4 bg-zinc-50 dark:bg-zinc-900/80 border-b border-zinc-200 dark:border-white/5 flex flex-wrap items-center gap-3">
-          <select 
-            value={method}
-            onChange={(e) => setMethod(e.target.value)}
-            className="bg-indigo-600 text-white text-[10px] font-bold rounded-lg px-3 py-2 outline-none appearance-none cursor-pointer hover:bg-indigo-700 transition-colors"
-          >
-            <option>GET</option>
-            <option>POST</option>
-            <option>PUT</option>
-            <option>DELETE</option>
-          </select>
-          <input 
-            type="text" 
-            value={endpoint}
-            onChange={(e) => setEndpoint(e.target.value)}
-            className="flex-1 bg-zinc-100 dark:bg-white/5 border border-zinc-200 dark:border-white/10 rounded-lg px-4 py-2 text-xs font-mono text-zinc-900 dark:text-zinc-300 focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all"
-          />
+          <div className="relative group">
+            <select 
+              value={method}
+              onChange={(e) => setMethod(e.target.value)}
+              className="bg-indigo-600 text-white text-[10px] font-bold rounded-lg px-3 py-2 outline-none appearance-none cursor-pointer hover:bg-indigo-700 transition-colors pr-8"
+            >
+              <option>GET</option>
+              <option>POST</option>
+              <option>PUT</option>
+              <option>DELETE</option>
+            </select>
+            <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none">
+              <svg className="w-3 h-3 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" /></svg>
+            </div>
+          </div>
+          <div className="flex-1 min-w-[200px] relative">
+            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 font-mono text-[10px]">https://api.docugen.io</div>
+            <input 
+              type="text" 
+              value={endpoint}
+              onChange={(e) => setEndpoint(e.target.value)}
+              className="w-full bg-zinc-100 dark:bg-white/5 border border-zinc-200 dark:border-white/10 rounded-lg pl-[110px] pr-4 py-2 text-xs font-mono text-zinc-900 dark:text-zinc-300 focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all font-medium"
+            />
+          </div>
           <button 
             onClick={handleExecute}
             disabled={isLoading}
@@ -437,43 +490,131 @@ const InteractiveAPI: React.FC = () => {
           </button>
         </div>
 
-        {/* Response Body */}
-        <div className="p-6 bg-zinc-50/50 dark:bg-transparent min-h-[200px] flex flex-col">
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-[10px] font-bold text-zinc-400 dark:text-zinc-600 uppercase tracking-widest">Response Body</span>
-            {response && <span className="text-[10px] font-bold text-emerald-500">200 OK</span>}
+        <div className="grid grid-cols-1 lg:grid-cols-2">
+          {/* Code Samples */}
+          <div className="border-r border-zinc-200 dark:border-white/5 flex flex-col bg-zinc-50/30 dark:bg-white/[0.02]">
+            <div className="px-5 py-3 border-b border-zinc-200 dark:border-white/5 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                {(['javascript', 'python', 'curl'] as const).map((lang) => (
+                  <button
+                    key={lang}
+                    onClick={() => setSelectedLang(lang)}
+                    className={`text-[10px] font-black uppercase tracking-widest transition-all relative py-1 ${
+                      selectedLang === lang 
+                        ? 'text-indigo-600 dark:text-indigo-400' 
+                        : 'text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200'
+                    }`}
+                  >
+                    {lang}
+                    {selectedLang === lang && (
+                      <motion.div 
+                        layoutId="activeTab"
+                        className="absolute -bottom-[13px] left-0 right-0 h-0.5 bg-indigo-500" 
+                      />
+                    )}
+                  </button>
+                ))}
+              </div>
+              <button 
+                onClick={copyToClipboard}
+                className="p-1.5 hover:bg-zinc-200 dark:hover:bg-white/10 rounded-md transition-colors group relative"
+                title="Copy code"
+              >
+                {copied ? (
+                  <Check className="w-3.5 h-3.5 text-emerald-500" />
+                ) : (
+                  <Copy className="w-3.5 h-3.5 text-zinc-400 group-hover:text-zinc-600 dark:group-hover:text-zinc-200" />
+                )}
+              </button>
+            </div>
+            <div className="p-5 font-mono text-[11px] leading-relaxed overflow-auto max-h-[300px]">
+              <AnimatePresence mode="wait">
+                <motion.pre
+                  key={selectedLang}
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -5 }}
+                  transition={{ duration: 0.2 }}
+                  className="text-zinc-600 dark:text-zinc-400 whitespace-pre"
+                >
+                  {getCodeSnippet(selectedLang)}
+                </motion.pre>
+              </AnimatePresence>
+            </div>
           </div>
-          
-          <div className="flex-1 font-mono text-xs leading-relaxed">
-            {isLoading ? (
-              <div className="flex items-center justify-center h-full">
-                <div className="flex gap-1">
-                  <div className="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-bounce" style={{ animationDelay: '0s' }}></div>
-                  <div className="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                  <div className="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+
+          {/* Response Body */}
+          <div className="p-6 min-h-[300px] flex flex-col">
+            <div className="flex items-center justify-between mb-4">
+              <span className="text-[10px] font-bold text-zinc-400 dark:text-zinc-600 uppercase tracking-widest">Response Body</span>
+              {response && (
+                <div className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                  <span className="text-[10px] font-bold text-emerald-500">200 OK</span>
                 </div>
-              </div>
-            ) : response ? (
-              <pre className="text-indigo-600 dark:text-indigo-300 animate-in fade-in slide-in-from-bottom-2 duration-300">
-                {JSON.stringify(response, null, 2)}
-              </pre>
-            ) : (
-              <div className="text-zinc-400 dark:text-zinc-600 italic">
-                Click Execute to see the response payload...
-              </div>
-            )}
+              )}
+            </div>
+            
+            <div className="flex-1 font-mono text-[11px] leading-relaxed">
+              {isLoading ? (
+                <div className="flex items-center justify-center h-full">
+                  <div className="flex gap-1.5">
+                    <motion.div 
+                      animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+                      transition={{ repeat: Infinity, duration: 1, delay: 0 }}
+                      className="w-1.5 h-1.5 bg-indigo-500 rounded-full"
+                    />
+                    <motion.div 
+                      animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+                      transition={{ repeat: Infinity, duration: 1, delay: 0.2 }}
+                      className="w-1.5 h-1.5 bg-indigo-500 rounded-full"
+                    />
+                    <motion.div 
+                      animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+                      transition={{ repeat: Infinity, duration: 1, delay: 0.4 }}
+                      className="w-1.5 h-1.5 bg-indigo-500 rounded-full"
+                    />
+                  </div>
+                </div>
+              ) : response ? (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.98 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="bg-indigo-500/5 dark:bg-black/20 p-4 rounded-xl border border-indigo-500/10"
+                >
+                  <pre className="text-zinc-900 dark:text-indigo-300">
+                    {JSON.stringify(response, null, 2)}
+                  </pre>
+                </motion.div>
+              ) : (
+                <div className="flex flex-col items-center justify-center h-full text-zinc-400 dark:text-zinc-600 space-y-2">
+                  <Globe className="w-8 h-8 opacity-20" />
+                  <p className="text-[10px] italic">Waiting for request execution...</p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="p-4 rounded-xl border border-zinc-200 dark:border-white/5 bg-zinc-50 dark:bg-white/5">
-          <h4 className="text-[10px] font-bold text-zinc-400 mb-2 uppercase tracking-widest">Authentication</h4>
-          <p className="text-xs text-zinc-500">All requests require a valid Bearer token in the Authorization header. Manage your tokens in the Dashboard.</p>
+        <div className="p-4 rounded-xl border border-zinc-200 dark:border-white/5 bg-zinc-50 dark:bg-white/5 flex gap-3">
+          <div className="w-8 h-8 rounded-lg bg-indigo-500/10 flex items-center justify-center shrink-0">
+            <Terminal className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+          </div>
+          <div>
+            <h4 className="text-[10px] font-bold text-zinc-400 mb-1 uppercase tracking-widest">Authentication</h4>
+            <p className="text-[11px] text-zinc-500 leading-relaxed">All requests require a valid Bearer token in the Authorization header. Manage your tokens in the Dashboard.</p>
+          </div>
         </div>
-        <div className="p-4 rounded-xl border border-zinc-200 dark:border-white/5 bg-zinc-50 dark:bg-white/5">
-          <h4 className="text-[10px] font-bold text-zinc-400 mb-2 uppercase tracking-widest">Rate Limiting</h4>
-          <p className="text-xs text-zinc-500">Free tier is limited to 1,000 requests per month. Upgrade to Pro for unlimited API access.</p>
+        <div className="p-4 rounded-xl border border-zinc-200 dark:border-white/5 bg-zinc-50 dark:bg-white/5 flex gap-3">
+          <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center shrink-0">
+            <Cpu className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+          </div>
+          <div>
+            <h4 className="text-[10px] font-bold text-zinc-400 mb-1 uppercase tracking-widest">Rate Limiting</h4>
+            <p className="text-[11px] text-zinc-500 leading-relaxed">Free tier is limited to 1,000 requests per month. Upgrade to Pro for unlimited API access.</p>
+          </div>
         </div>
       </div>
     </div>
