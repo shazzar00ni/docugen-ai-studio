@@ -11,7 +11,7 @@ export const Navbar: React.FC<NavbarProps> = ({ toggleTheme, theme }) => {
     <nav className="sticky top-0 z-50 w-full border-b border-zinc-200 dark:border-white/10 glass">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <div className="flex items-center gap-3 shrink-0">
-          <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-600/20">
+          <div className="w-8 h-8 bg-green-700 rounded-lg flex items-center justify-center font-bold text-white shadow-lg shadow-green-700/20">
             D
           </div>
           <span className="text-xl font-bold tracking-tight text-zinc-900 dark:text-white">DocuGen</span>

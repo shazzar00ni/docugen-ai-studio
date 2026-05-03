@@ -49,7 +49,7 @@ export const Features: React.FC = () => {
           {features.map((f, i) => (
             <div 
               key={i} 
-              className="p-8 rounded-3xl border border-zinc-200 dark:border-white/5 bg-white dark:bg-zinc-900/30 glass group transition-all duration-500 ease-out hover:scale-[1.03] hover:-translate-y-2 hover:border-indigo-500/40 hover:shadow-2xl dark:hover:shadow-indigo-500/10 cursor-default shadow-sm"
+              className="p-8 rounded-3xl border border-zinc-200 dark:border-white/5 bg-white dark:bg-zinc-900/30 glass group transition-all duration-500 ease-out hover:scale-[1.03] hover:-translate-y-2 hover:border-green-500/40 hover:shadow-2xl dark:hover:shadow-green-500/10 cursor-default shadow-sm"
             >
               <div className="text-3xl mb-4 grayscale group-hover:grayscale-0 transition-all duration-300">{f.icon}</div>
               <h3 className="text-lg font-bold mb-2 text-zinc-900 dark:text-white">{f.title}</h3>

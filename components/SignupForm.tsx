@@ -33,11 +33,11 @@ export const SignupForm: React.FC = () => {
                 placeholder="developer@company.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="flex-1 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl px-5 py-5 text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all hover:border-zinc-300 dark:hover:border-zinc-700 shadow-sm"
+                className="flex-1 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl px-5 py-5 text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-green-500/50 transition-all hover:border-zinc-300 dark:hover:border-zinc-700 shadow-sm"
               />
               <button
                 type="submit"
-                className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-10 py-5 rounded-2xl transition-all shadow-xl shadow-indigo-600/20 hover:-translate-y-1 active:scale-95"
+                className="bg-green-700 hover:bg-green-800 text-white font-bold px-10 py-5 rounded-2xl transition-all shadow-xl shadow-green-700/20 hover:-translate-y-1 active:scale-95"
               >
                 Join Now
               </button>

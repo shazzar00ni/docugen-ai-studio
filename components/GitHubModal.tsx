@@ -55,7 +55,7 @@ export const GitHubModal: React.FC<GitHubModalProps> = ({ onClose, onConnect }) 
               placeholder="Search your repositories..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-zinc-100 dark:bg-black/40 border border-zinc-200 dark:border-white/10 rounded-2xl px-12 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all shadow-inner"
+              className="w-full bg-zinc-100 dark:bg-black/40 border border-zinc-200 dark:border-white/10 rounded-2xl px-12 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-green-500/50 transition-all shadow-inner"
             />
             <svg className="w-5 h-5 text-zinc-400 absolute left-4 top-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
           </div>
@@ -66,10 +66,10 @@ export const GitHubModal: React.FC<GitHubModalProps> = ({ onClose, onConnect }) 
                 key={repo.name}
                 disabled={!!isSyncing}
                 onClick={() => handleSelect(repo.name)}
-                className={`w-full text-left p-4 rounded-2xl border border-zinc-100 dark:border-white/5 hover:bg-zinc-50 dark:hover:bg-white/5 transition-all flex items-center justify-between group ${isSyncing === repo.name ? 'bg-indigo-500/10 border-indigo-500/30' : ''}`}
+                className={`w-full text-left p-4 rounded-2xl border border-zinc-100 dark:border-white/5 hover:bg-zinc-50 dark:hover:bg-white/5 transition-all flex items-center justify-between group ${isSyncing === repo.name ? 'bg-green-500/10 border-green-500/30' : ''}`}
               >
                 <div className="flex items-center gap-3">
-                  <svg className={`w-5 h-5 ${isSyncing === repo.name ? 'text-indigo-500' : 'text-zinc-400 group-hover:text-zinc-600 dark:group-hover:text-zinc-300'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" /></svg>
+                  <svg className={`w-5 h-5 ${isSyncing === repo.name ? 'text-green-600' : 'text-zinc-400 group-hover:text-zinc-600 dark:group-hover:text-zinc-300'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" /></svg>
                   <div>
                     <div className="text-sm font-bold text-zinc-900 dark:text-white">{repo.name}</div>
                     <div className="text-[10px] text-zinc-500 flex items-center gap-2">
@@ -83,7 +83,7 @@ export const GitHubModal: React.FC<GitHubModalProps> = ({ onClose, onConnect }) 
                   </div>
                 </div>
                 {isSyncing === repo.name ? (
-                  <div className="w-5 h-5 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+                  <div className="w-5 h-5 border-2 border-green-600 border-t-transparent rounded-full animate-spin" />
                 ) : (
                   <svg className="w-5 h-5 text-zinc-300 opacity-0 group-hover:opacity-100 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
                 )}

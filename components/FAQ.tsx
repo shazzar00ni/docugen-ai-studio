@@ -15,10 +15,10 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer }) => {
         onClick={() => setIsOpen(!isOpen)}
         className="w-full py-6 flex items-center justify-between text-left group transition-all"
       >
-        <span className={`text-lg font-bold tracking-tight transition-colors ${isOpen ? 'text-indigo-600 dark:text-indigo-400' : 'text-zinc-900 dark:text-zinc-200 group-hover:text-zinc-600 dark:group-hover:text-white'}`}>
+        <span className={`text-lg font-bold tracking-tight transition-colors ${isOpen ? 'text-green-700 dark:text-green-400' : 'text-zinc-900 dark:text-zinc-200 group-hover:text-zinc-600 dark:group-hover:text-white'}`}>
           {question}
         </span>
-        <div className={`w-8 h-8 rounded-full flex items-center justify-center border transition-all ${isOpen ? 'bg-indigo-600 border-indigo-600 text-white rotate-180' : 'border-zinc-200 dark:border-white/10 text-zinc-400 group-hover:border-zinc-400 dark:group-hover:border-zinc-600'}`}>
+        <div className={`w-8 h-8 rounded-full flex items-center justify-center border transition-all ${isOpen ? 'bg-green-700 border-green-700 text-white rotate-180' : 'border-zinc-200 dark:border-white/10 text-zinc-400 group-hover:border-zinc-400 dark:group-hover:border-zinc-600'}`}>
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
         </div>
       </button>
@@ -72,7 +72,7 @@ export const FAQ: React.FC = () => {
           
           <div className="mt-12 text-center">
             <p className="text-sm text-zinc-500 dark:text-zinc-400">
-              Can't find what you're looking for? <a href="#" className="text-indigo-600 dark:text-indigo-400 font-bold hover:underline">Contact our support team</a>
+              Can't find what you're looking for? <a href="#" className="text-green-700 dark:text-green-400 font-bold hover:underline">Contact our support team</a>
             </p>
           </div>
         </div>

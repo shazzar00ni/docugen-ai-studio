@@ -36,7 +36,7 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-2 md:grid-cols-5 gap-12 mb-16">
           <div className="col-span-2">
             <div className="flex items-center gap-2 mb-6">
-              <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-600/20">
+              <div className="w-8 h-8 bg-green-700 rounded-lg flex items-center justify-center font-bold text-white shadow-lg shadow-green-700/20">
                 D
               </div>
               <span className="text-xl font-bold tracking-tight text-zinc-900 dark:text-white">DocuGen</span>
@@ -51,7 +51,7 @@ export const Footer: React.FC = () => {
             <ul className="space-y-4">
               {footerLinks.product.map(link => (
                 <li key={link.name}>
-                  <a href={link.href} className="text-sm text-zinc-500 dark:text-zinc-400 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors">{link.name}</a>
+                  <a href={link.href} className="text-sm text-zinc-500 dark:text-zinc-400 hover:text-green-600 dark:hover:text-green-400 transition-colors">{link.name}</a>
                 </li>
               ))}
             </ul>
@@ -62,7 +62,7 @@ export const Footer: React.FC = () => {
             <ul className="space-y-4">
               {footerLinks.resources.map(link => (
                 <li key={link.name}>
-                  <a href={link.href} className="text-sm text-zinc-500 dark:text-zinc-400 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors">{link.name}</a>
+                  <a href={link.href} className="text-sm text-zinc-500 dark:text-zinc-400 hover:text-green-600 dark:hover:text-green-400 transition-colors">{link.name}</a>
                 </li>
               ))}
             </ul>
@@ -73,7 +73,7 @@ export const Footer: React.FC = () => {
             <ul className="space-y-4">
               {footerLinks.company.map(link => (
                 <li key={link.name}>
-                  <a href={link.href} className="text-sm text-zinc-500 dark:text-zinc-400 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors">{link.name}</a>
+                  <a href={link.href} className="text-sm text-zinc-500 dark:text-zinc-400 hover:text-green-600 dark:hover:text-green-400 transition-colors">{link.name}</a>
                 </li>
               ))}
             </ul>

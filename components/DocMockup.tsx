@@ -42,22 +42,22 @@ export const DocMockup: React.FC<DocMockupProps> = ({ theme, toggleTheme }) => {
         <aside className={`hidden md:block w-64 border-r ${isDark ? 'border-white/5' : 'border-zinc-100'} p-6 text-left transition-colors duration-500`}>
           <div className={`font-semibold ${isDark ? 'text-zinc-500' : 'text-zinc-400'} mb-4 text-[10px] uppercase tracking-wider`}>Getting Started</div>
           <div className="space-y-3">
-            <div className={`text-sm ${isDark ? 'text-indigo-400 font-medium' : 'text-indigo-600 font-bold'}`}>Introduction</div>
-            <div className={`text-sm ${isDark ? 'text-zinc-500' : 'text-zinc-400'} hover:text-indigo-500 cursor-pointer`}>Quick Start</div>
-            <div className={`text-sm ${isDark ? 'text-zinc-500' : 'text-zinc-400'} hover:text-indigo-500 cursor-pointer`}>Installation</div>
+            <div className={`text-sm ${isDark ? 'text-green-400 font-medium' : 'text-green-700 font-bold'}`}>Introduction</div>
+            <div className={`text-sm ${isDark ? 'text-zinc-500' : 'text-zinc-400'} hover:text-green-500 cursor-pointer`}>Quick Start</div>
+            <div className={`text-sm ${isDark ? 'text-zinc-500' : 'text-zinc-400'} hover:text-green-500 cursor-pointer`}>Installation</div>
           </div>
           <div className={`font-semibold ${isDark ? 'text-zinc-500' : 'text-zinc-400'} mt-8 mb-4 text-[10px] uppercase tracking-wider`}>Core Features</div>
           <div className="space-y-3">
-            <div className={`text-sm ${isDark ? 'text-zinc-500' : 'text-zinc-400'} hover:text-indigo-500 cursor-pointer`}>AI Search</div>
-            <div className={`text-sm ${isDark ? 'text-zinc-500' : 'text-zinc-400'} hover:text-indigo-500 cursor-pointer`}>API Reference</div>
-            <div className={`text-sm ${isDark ? 'text-zinc-500' : 'text-zinc-400'} hover:text-indigo-500 cursor-pointer`}>Custom Domains</div>
+            <div className={`text-sm ${isDark ? 'text-zinc-500' : 'text-zinc-400'} hover:text-green-500 cursor-pointer`}>AI Search</div>
+            <div className={`text-sm ${isDark ? 'text-zinc-500' : 'text-zinc-400'} hover:text-green-500 cursor-pointer`}>API Reference</div>
+            <div className={`text-sm ${isDark ? 'text-zinc-500' : 'text-zinc-400'} hover:text-green-500 cursor-pointer`}>Custom Domains</div>
           </div>
         </aside>
         
         {/* Main Doc */}
         <div className={`flex-1 p-8 md:p-12 text-left ${isDark ? 'bg-transparent' : 'bg-white'} transition-colors duration-500`}>
           <div className="max-w-2xl">
-            <div className={`font-semibold mb-2 text-sm ${isDark ? 'text-indigo-500' : 'text-indigo-600'}`}>Introduction</div>
+            <div className={`font-semibold mb-2 text-sm ${isDark ? 'text-green-600' : 'text-green-700'}`}>Introduction</div>
             <h2 className={`text-3xl font-bold mb-6 ${isDark ? 'text-white' : 'text-zinc-900'}`}>Getting Started with DocuGen</h2>
             <p className={`mb-8 leading-relaxed ${isDark ? 'text-zinc-400' : 'text-zinc-600'}`}>
               DocuGen makes it incredibly easy to ship professional documentation without the manual overhead. Simply push your Markdown files and let our AI handle the navigation, styling, and search indexing.
@@ -66,7 +66,7 @@ export const DocMockup: React.FC<DocMockupProps> = ({ theme, toggleTheme }) => {
             <div className={`p-4 rounded-lg border font-mono text-sm mb-8 overflow-hidden transition-colors duration-500 ${isDark ? 'bg-black border-white/5' : 'bg-zinc-50 border-zinc-200'}`}>
               <div className="flex gap-2 mb-2">
                 <span className="text-zinc-600">1</span>
-                <span className={isDark ? 'text-indigo-400' : 'text-indigo-600'}>npx</span> <span className={isDark ? 'text-emerald-400' : 'text-emerald-600'}>docugen</span> deploy ./docs
+                <span className={isDark ? 'text-green-400' : 'text-green-700'}>npx</span> <span className={isDark ? 'text-emerald-400' : 'text-emerald-600'}>docugen</span> deploy ./docs
               </div>
               <div className="flex gap-2">
                 <span className="text-zinc-600">2</span>

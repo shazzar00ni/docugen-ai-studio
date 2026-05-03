@@ -2,8 +2,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { Code2, Copy, Check, Terminal, Globe, Cpu } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Code2, Copy, Check, Terminal, Globe, Cpu } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
 
 type DocPage = 
   | 'introduction' 
@@ -39,13 +37,13 @@ const VersionSwitcher: React.FC<{ current: string; onSelect: (v: string) => void
     <div className="relative mb-8">
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between px-3 py-2.5 bg-white dark:bg-zinc-800/50 border border-zinc-200 dark:border-white/10 rounded-xl hover:border-indigo-500/50 transition-all shadow-sm group"
+        className="w-full flex items-center justify-between px-3 py-2.5 bg-white dark:bg-zinc-800/50 border border-zinc-200 dark:border-white/10 rounded-xl hover:border-green-500/50 transition-all shadow-sm group"
       >
         <div className="flex items-center gap-2">
           <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
           <span className="text-xs font-bold text-zinc-900 dark:text-zinc-200">{current}</span>
           {versions.find(v => v.id === current)?.tag === 'Latest' && (
-             <span className="text-[9px] px-1.5 py-0.5 bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 rounded-md font-black uppercase tracking-tighter">Latest</span>
+             <span className="text-[9px] px-1.5 py-0.5 bg-green-500/10 text-green-600 dark:text-green-500 rounded-md font-black uppercase tracking-tighter">Latest</span>
           )}
         </div>
         <svg className={`w-4 h-4 text-zinc-400 group-hover:text-zinc-600 transition-transform ${isOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
@@ -59,9 +57,9 @@ const VersionSwitcher: React.FC<{ current: string; onSelect: (v: string) => void
               <button
                 key={v.id}
                 onClick={() => { onSelect(v.id); setIsOpen(false); }}
-                className={`w-full px-4 py-3 text-left text-xs flex items-center justify-between hover:bg-zinc-50 dark:hover:bg-white/5 transition-colors ${current === v.id ? 'bg-indigo-50/50 dark:bg-indigo-500/5' : ''}`}
+                className={`w-full px-4 py-3 text-left text-xs flex items-center justify-between hover:bg-zinc-50 dark:hover:bg-white/5 transition-colors ${current === v.id ? 'bg-green-50/50 dark:bg-green-500/5' : ''}`}
               >
-                <span className={`font-bold ${current === v.id ? 'text-indigo-600 dark:text-indigo-400' : 'text-zinc-600 dark:text-zinc-400'}`}>{v.label}</span>
+                <span className={`font-bold ${current === v.id ? 'text-green-600 dark:text-green-500' : 'text-zinc-600 dark:text-zinc-400'}`}>{v.label}</span>
                 <span className="text-[9px] text-zinc-400 uppercase tracking-widest">{v.tag}</span>
               </button>
             ))}
@@ -117,7 +115,7 @@ const DomainManager: React.FC = () => {
         </div>
         <div className="flex gap-2">
           <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 text-[10px] font-bold uppercase tracking-wider border border-emerald-500/20">SSL included</span>
-          <span className="px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-600 text-[10px] font-bold uppercase tracking-wider border border-indigo-500/20">Any Provider</span>
+          <span className="px-3 py-1 rounded-full bg-green-500/10 text-green-600 text-[10px] font-bold uppercase tracking-wider border border-green-500/20">Any Provider</span>
         </div>
       </div>
 
@@ -126,7 +124,7 @@ const DomainManager: React.FC = () => {
           {step === 'idle' && (
             <form onSubmit={handleConnect} className="space-y-8 py-4">
               <div className="text-center space-y-2">
-                <div className="w-16 h-16 bg-indigo-500/10 text-indigo-500 rounded-3xl flex items-center justify-center mx-auto mb-4 border border-indigo-500/20 shadow-inner">
+                <div className="w-16 h-16 bg-green-500/10 text-green-600 rounded-3xl flex items-center justify-center mx-auto mb-4 border border-green-500/20 shadow-inner">
                   <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9-9c1.657 0 3 3.582 3 8s-1.343 8-3 8m0-16c-1.657 0-3 3.582-3 8s1.343 8 3 8m0-16H9m12 0H15" /></svg>
                 </div>
                 <h4 className="text-xl font-bold text-zinc-900 dark:text-white">What's your domain?</h4>
@@ -142,7 +140,7 @@ const DomainManager: React.FC = () => {
                     placeholder="docs.yourcompany.com"
                     value={domain}
                     onChange={(e) => setDomain(e.target.value)}
-                    className="w-full bg-zinc-100 dark:bg-black/40 border border-zinc-200 dark:border-white/10 rounded-2xl pl-16 pr-4 py-4 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all shadow-inner"
+                    className="w-full bg-zinc-100 dark:bg-black/40 border border-zinc-200 dark:border-white/10 rounded-2xl pl-16 pr-4 py-4 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-green-500/50 transition-all shadow-inner"
                   />
                 </div>
                 <button type="submit" className="bg-zinc-900 dark:bg-white text-white dark:text-black px-8 py-4 rounded-2xl text-sm font-bold hover:opacity-90 active:scale-95 transition-all shadow-lg">
@@ -162,7 +160,7 @@ const DomainManager: React.FC = () => {
               <div className="relative w-20 h-20 mx-auto">
                 <svg className="w-full h-full transform -rotate-90">
                   <circle cx="40" cy="40" r="36" stroke="currentColor" strokeWidth="8" fill="transparent" className="text-zinc-100 dark:text-white/5" />
-                  <circle cx="40" cy="40" r="36" stroke="currentColor" strokeWidth="8" fill="transparent" strokeDasharray={226} strokeDashoffset={226 - (226 * progress) / 100} className="text-indigo-500 transition-all duration-300 ease-linear" />
+                  <circle cx="40" cy="40" r="36" stroke="currentColor" strokeWidth="8" fill="transparent" strokeDasharray={226} strokeDashoffset={226 - (226 * progress) / 100} className="text-green-600 transition-all duration-300 ease-linear" />
                 </svg>
                 <div className="absolute inset-0 flex items-center justify-center">
                    <span className="text-xs font-bold text-zinc-900 dark:text-white">{progress}%</span>
@@ -191,17 +189,17 @@ const DomainManager: React.FC = () => {
                       <div className="col-span-2">Content / Value</div>
                    </div>
                    <div className="grid grid-cols-4 gap-4 text-xs font-mono items-center">
-                      <div className="col-span-1 text-zinc-900 dark:text-indigo-400 font-bold">CNAME</div>
+                      <div className="col-span-1 text-zinc-900 dark:text-green-500 font-bold">CNAME</div>
                       <div className="col-span-1 text-zinc-600 dark:text-zinc-400 truncate">{domain.split('.')[0]}</div>
                       <div className="col-span-2 flex items-center justify-between bg-white dark:bg-white/5 px-3 py-2 rounded-lg border border-zinc-200 dark:border-white/5">
                         <span className="text-zinc-900 dark:text-zinc-200 truncate">cname.docugen.io</span>
-                        <button className="text-zinc-400 hover:text-indigo-500"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                        <button className="text-zinc-400 hover:text-green-500"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
                       </div>
                    </div>
                 </div>
                 
-                <div className="p-4 rounded-xl bg-indigo-500/5 border border-indigo-500/10 flex gap-3 items-start">
-                   <svg className="w-5 h-5 text-indigo-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <div className="p-4 rounded-xl bg-green-500/5 border border-green-500/10 flex gap-3 items-start">
+                   <svg className="w-5 h-5 text-green-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                    <p className="text-[11px] text-zinc-600 dark:text-zinc-400 leading-relaxed">Propagating DNS changes can take up to 24 hours, but usually happens in under 5 minutes. We'll automatically retry verification in the background.</p>
                 </div>
               </div>
@@ -209,7 +207,7 @@ const DomainManager: React.FC = () => {
               <div className="flex gap-3">
                 <button 
                   onClick={handleConfirmDNS}
-                  className="flex-1 bg-indigo-600 text-white py-4 rounded-2xl font-bold text-sm hover:bg-indigo-700 active:scale-[0.98] transition-all shadow-lg shadow-indigo-600/20"
+                  className="flex-1 bg-green-700 text-white py-4 rounded-2xl font-bold text-sm hover:bg-green-800 active:scale-[0.98] transition-all shadow-lg shadow-green-700/20"
                 >
                   Confirm DNS Changes
                 </button>
@@ -234,7 +232,7 @@ const DomainManager: React.FC = () => {
                 <p className="text-sm text-zinc-500">Traffic is now being routed through our global edge network.</p>
                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-zinc-100 dark:bg-white/5 rounded-2xl border border-zinc-200 dark:border-white/10 mt-4">
                    <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
-                   <span className="text-xs font-mono font-bold text-indigo-500 dark:text-indigo-400">{domain}</span>
+                   <span className="text-xs font-mono font-bold text-green-600 dark:text-green-500">{domain}</span>
                 </div>
               </div>
 
@@ -245,7 +243,7 @@ const DomainManager: React.FC = () => {
                  </div>
                  <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-black/40 border border-zinc-100 dark:border-white/5 flex flex-col items-center">
                     <span className="text-[10px] font-black text-zinc-400 uppercase tracking-widest mb-1">Latency</span>
-                    <span className="text-[10px] font-bold text-indigo-500 uppercase">12ms avg</span>
+                    <span className="text-[10px] font-bold text-green-600 uppercase">12ms avg</span>
                  </div>
               </div>
 
@@ -261,11 +259,11 @@ const DomainManager: React.FC = () => {
 };
 
 const DesignCustomizer: React.FC = () => {
-  const [primaryColor, setPrimaryColor] = useState('#6366f1');
+  const [primaryColor, setPrimaryColor] = useState('#15803d');
   const [fontFamily, setFontFamily] = useState('Inter');
 
   const colors = [
-    { name: 'Indigo', hex: '#6366f1' },
+    { name: 'Green', hex: '#15803d' },
     { name: 'Rose', hex: '#f43f5e' },
     { name: 'Emerald', hex: '#10b981' },
     { name: 'Amber', hex: '#f59e0b' },
@@ -295,7 +293,7 @@ const DesignCustomizer: React.FC = () => {
                 <button
                   key={c.hex}
                   onClick={() => setPrimaryColor(c.hex)}
-                  className={`w-10 h-10 rounded-full transition-all transform active:scale-90 ${primaryColor === c.hex ? 'ring-4 ring-offset-2 ring-indigo-500/20 dark:ring-offset-zinc-900' : ''}`}
+                  className={`w-10 h-10 rounded-full transition-all transform active:scale-90 ${primaryColor === c.hex ? 'ring-4 ring-offset-2 ring-green-500/20 dark:ring-offset-zinc-900' : ''}`}
                   style={{ backgroundColor: c.hex }}
                   title={c.name}
                 />
@@ -392,34 +390,123 @@ const InteractiveAPI: React.FC = () => {
   const [selectedLang, setSelectedLang] = useState<'javascript' | 'python' | 'curl'>('javascript');
   const [copied, setCopied] = useState(false);
 
+  const endpoints: Record<string, Record<string, any>> = {
+    'GET': {
+      '/v1/auth/session': {
+        id: "user_7742",
+        status: "active",
+        timestamp: new Date().toISOString(),
+        permissions: ["read", "write"],
+        token: "Bearer ••••••••••••••••"
+      },
+      '/v1/projects': [
+        { id: "proj_1", name: "DocuGen Main", visibility: "public", last_sync: "2 mins ago" },
+        { id: "proj_2", name: "Internal Wiki", visibility: "private", last_sync: "1 hour ago" },
+        { id: "proj_3", name: "Marketing Site", visibility: "public", last_sync: "Just now" }
+      ],
+      '/v1/usage': {
+        requests: 4520,
+        limit: 10000,
+        reset_date: "2026-05-01T00:00:00Z",
+        tier: "Pro"
+      }
+    },
+    'POST': {
+      '/v1/projects': {
+        id: "proj_new",
+        name: "New Project",
+        status: "created",
+        url: "https://docugen.io/proj_new",
+        sync_status: "pending"
+      },
+      '/v1/auth/login': {
+        success: true,
+        session_id: "sess_98231",
+        expires_at: "2026-05-01T00:00:00Z",
+        user_id: "user_7742"
+      },
+      '/v1/deploy': {
+        deployment_id: "dep_abc123",
+        status: "queued",
+        estimated_time: "45s"
+      }
+    },
+    'PUT': {
+      '/v1/projects/proj_1': {
+        id: "proj_1",
+        name: "DocuGen Updated",
+        updated_at: new Date().toISOString(),
+        version: "2.5.0"
+      },
+      '/v1/user/profile': {
+        id: "user_7742",
+        name: "Dev User",
+        email: "dev@docugen.io",
+        preferences: { theme: "dark", notifications: true }
+      },
+      '/v1/settings/appearance': {
+        primary_color: "#15803d",
+        font_family: "Inter",
+        updated: true
+      }
+    },
+    'DELETE': {
+      '/v1/projects/proj_2': {
+        success: true,
+        message: "Project successfully archived",
+        deleted_at: new Date().toISOString(),
+        recovery_available_until: "2026-05-24T09:00:00Z"
+      },
+      '/v1/auth/logout': {
+        success: true,
+        message: "Session terminated",
+        cleared_cookies: ["session_id", "csrf_token"]
+      },
+      '/v1/api-keys/key_992': {
+        id: "key_992",
+        status: "revoked",
+        revoked_at: new Date().toISOString()
+      }
+    }
+  };
+
+  const currentEndpoints = useMemo(() => {
+    return Object.keys(endpoints[method] || {});
+  }, [method]);
+
+  useEffect(() => {
+    if (!endpoints[method][endpoint]) {
+      setEndpoint(currentEndpoints[0] || '');
+    }
+  }, [method, currentEndpoints]);
+
   const handleExecute = () => {
     setIsLoading(true);
     setResponse(null);
     setTimeout(() => {
       setIsLoading(false);
-      setResponse({
-        id: "user_" + Math.floor(Math.random() * 10000),
-        status: "active",
-        timestamp: new Date().toISOString(),
-        permissions: ["read", "write"],
-        token: "Bearer ••••••••••••••••"
-      });
+      const mockResult = endpoints[method]?.[endpoint] || { error: "Not Found" };
+      setResponse(mockResult);
     }, 800);
   };
 
   const getCodeSnippet = (lang: string) => {
     const fullUrl = `https://api.docugen.io${endpoint}`;
+    const escapedUrl = fullUrl.replace(/'/g, "\\'");
+    
     switch (lang) {
       case 'javascript':
-        return `const response = await fetch('${fullUrl}', {
+        return `// Use the DocuGen SDK or standard fetch
+const response = await fetch('${escapedUrl}', {
   method: '${method}',
   headers: {
     'Authorization': 'Bearer YOUR_TOKEN',
     'Content-Type': 'application/json'
-  }${method !== 'GET' ? `,\n  body: JSON.stringify({ /* data */ })` : ''}
+  }${method !== 'GET' ? `,\n  body: JSON.stringify({ /* your data */ })` : ''}
 });
+
 const data = await response.json();
-console.log(data);`;
+console.table(data);`;
       case 'python':
         return `import requests
 
@@ -429,12 +516,20 @@ headers = {
     "Content-Type": "application/json"
 }
 
-response = requests.${method.toLowerCase()}(url, headers=headers${method !== 'GET' ? ', json={}' : ''})
-print(response.json())`;
+# Execute the ${method} request
+response = requests.${method.toLowerCase()}(
+    url, 
+    headers=headers${method !== 'GET' ? ',\n    json={"key": "value"}' : ''}
+)
+
+if response.status_code == 200:
+    print("Success:", response.json())
+else:
+    print(f"Error {response.status_code}:", response.text)`;
       case 'curl':
         return `curl -X ${method} "${fullUrl}" \\
   -H "Authorization: Bearer YOUR_TOKEN" \\
-  -H "Content-Type: application/json" ${method !== 'GET' ? '\\\n  -d \'{}\'' : ''}`;
+  -H "Content-Type: application/json" ${method !== 'GET' ? '\\\n  -d \'{"data": "example"}\'' : ''}`;
       default:
         return '';
     }
@@ -459,7 +554,7 @@ print(response.json())`;
             <select 
               value={method}
               onChange={(e) => setMethod(e.target.value)}
-              className="bg-indigo-600 text-white text-[10px] font-bold rounded-lg px-3 py-2 outline-none appearance-none cursor-pointer hover:bg-indigo-700 transition-colors pr-8"
+              className="bg-green-700 text-white text-[10px] font-bold rounded-lg px-3 py-2 outline-none appearance-none cursor-pointer hover:bg-green-800 transition-colors pr-8"
             >
               <option>GET</option>
               <option>POST</option>
@@ -472,12 +567,15 @@ print(response.json())`;
           </div>
           <div className="flex-1 min-w-[200px] relative">
             <div className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 font-mono text-[10px]">https://api.docugen.io</div>
-            <input 
-              type="text" 
+            <select 
               value={endpoint}
               onChange={(e) => setEndpoint(e.target.value)}
-              className="w-full bg-zinc-100 dark:bg-white/5 border border-zinc-200 dark:border-white/10 rounded-lg pl-[110px] pr-4 py-2 text-xs font-mono text-zinc-900 dark:text-zinc-300 focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all font-medium"
-            />
+              className="w-full bg-zinc-100 dark:bg-white/5 border border-zinc-200 dark:border-white/10 rounded-lg pl-[110px] pr-4 py-2 text-xs font-mono text-zinc-900 dark:text-zinc-300 focus:outline-none focus:ring-1 focus:ring-green-500/50 transition-all font-medium appearance-none cursor-pointer"
+            >
+              {currentEndpoints.map(e => (
+                <option key={e} value={e}>{e}</option>
+              ))}
+            </select>
           </div>
           <button 
             onClick={handleExecute}
@@ -501,7 +599,7 @@ print(response.json())`;
                     onClick={() => setSelectedLang(lang)}
                     className={`text-[10px] font-black uppercase tracking-widest transition-all relative py-1 ${
                       selectedLang === lang 
-                        ? 'text-indigo-600 dark:text-indigo-400' 
+                        ? 'text-green-700 dark:text-green-500' 
                         : 'text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200'
                     }`}
                   >
@@ -509,7 +607,7 @@ print(response.json())`;
                     {selectedLang === lang && (
                       <motion.div 
                         layoutId="activeTab"
-                        className="absolute -bottom-[13px] left-0 right-0 h-0.5 bg-indigo-500" 
+                        className="absolute -bottom-[13px] left-0 right-0 h-0.5 bg-green-600" 
                       />
                     )}
                   </button>
@@ -562,17 +660,17 @@ print(response.json())`;
                     <motion.div 
                       animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
                       transition={{ repeat: Infinity, duration: 1, delay: 0 }}
-                      className="w-1.5 h-1.5 bg-indigo-500 rounded-full"
+                      className="w-1.5 h-1.5 bg-green-600 rounded-full"
                     />
                     <motion.div 
                       animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
                       transition={{ repeat: Infinity, duration: 1, delay: 0.2 }}
-                      className="w-1.5 h-1.5 bg-indigo-500 rounded-full"
+                      className="w-1.5 h-1.5 bg-green-600 rounded-full"
                     />
                     <motion.div 
                       animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
                       transition={{ repeat: Infinity, duration: 1, delay: 0.4 }}
-                      className="w-1.5 h-1.5 bg-indigo-500 rounded-full"
+                      className="w-1.5 h-1.5 bg-green-600 rounded-full"
                     />
                   </div>
                 </div>
@@ -580,9 +678,9 @@ print(response.json())`;
                 <motion.div
                   initial={{ opacity: 0, scale: 0.98 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="bg-indigo-500/5 dark:bg-black/20 p-4 rounded-xl border border-indigo-500/10"
+                  className="bg-green-500/5 dark:bg-black/20 p-4 rounded-xl border border-green-500/10"
                 >
-                  <pre className="text-zinc-900 dark:text-indigo-300">
+                  <pre className="text-zinc-900 dark:text-green-500">
                     {JSON.stringify(response, null, 2)}
                   </pre>
                 </motion.div>
@@ -599,8 +697,8 @@ print(response.json())`;
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="p-4 rounded-xl border border-zinc-200 dark:border-white/5 bg-zinc-50 dark:bg-white/5 flex gap-3">
-          <div className="w-8 h-8 rounded-lg bg-indigo-500/10 flex items-center justify-center shrink-0">
-            <Terminal className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+          <div className="w-8 h-8 rounded-lg bg-green-500/10 flex items-center justify-center shrink-0">
+            <Terminal className="w-4 h-4 text-green-700 dark:text-green-500" />
           </div>
           <div>
             <h4 className="text-[10px] font-bold text-zinc-400 mb-1 uppercase tracking-widest">Authentication</h4>
@@ -640,8 +738,8 @@ export const ExampleDocs: React.FC<ExampleDocsProps> = ({ theme, isGithubConnect
             directory of Markdown files. No configuration, no complex build steps—just pure, high-performance 
             documentation.
           </p>
-          <div className="p-6 rounded-2xl bg-indigo-500/5 border border-indigo-500/10 dark:border-indigo-500/20 shadow-sm">
-            <h4 className="text-indigo-600 dark:text-indigo-400 font-bold mb-2 flex items-center gap-2 text-sm">
+          <div className="p-6 rounded-2xl bg-green-500/5 border border-green-500/10 dark:border-green-500/20 shadow-sm">
+            <h4 className="text-green-700 dark:text-green-500 font-bold mb-2 flex items-center gap-2 text-sm">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
               Quick Tip
             </h4>
@@ -652,11 +750,11 @@ export const ExampleDocs: React.FC<ExampleDocsProps> = ({ theme, isGithubConnect
           <h3 className="text-xl font-bold text-zinc-900 dark:text-white mt-8">Why DocuGen?</h3>
           <ul className="space-y-4">
             <li className="flex gap-3">
-              <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-2 shrink-0" />
+              <span className="w-1.5 h-1.5 rounded-full bg-green-600 mt-2 shrink-0" />
               <span className="text-zinc-600 dark:text-zinc-400"><strong className="text-zinc-900 dark:text-zinc-200">Instant Deploy:</strong> Push to Git and your docs are live on our edge network.</span>
             </li>
             <li className="flex gap-3">
-              <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-2 shrink-0" />
+              <span className="w-1.5 h-1.5 rounded-full bg-green-600 mt-2 shrink-0" />
               <span className="text-zinc-600 dark:text-zinc-400"><strong className="text-zinc-900 dark:text-zinc-200">Semantic Search:</strong> Our built-in RAG system understands your technical context.</span>
             </li>
           </ul>
@@ -681,7 +779,7 @@ export const ExampleDocs: React.FC<ExampleDocsProps> = ({ theme, isGithubConnect
           <div className="rounded-xl bg-zinc-100 dark:bg-black border border-zinc-200 dark:border-white/5 p-4 font-mono text-sm overflow-x-auto shadow-inner">
             <div className="flex gap-3">
               <span className="text-zinc-400 dark:text-zinc-600">1</span>
-              <span className="text-indigo-600 dark:text-indigo-400">docugen</span> init
+              <span className="text-green-700 dark:text-green-500">docugen</span> init
             </div>
           </div>
         </div>
@@ -690,7 +788,7 @@ export const ExampleDocs: React.FC<ExampleDocsProps> = ({ theme, isGithubConnect
     configuration: {
       category: 'Core Concepts',
       title: 'Configuration',
-      source: `# Configuration\n\nDocuGen works with zero config, but you can fine-tune every aspect of your site using a JSON file.\n\n\`\`\`json\n{\n  "name": "My Project",\n  "theme": "dark",\n  "primaryColor": "#6366f1"\n}\n\`\`\``,
+      source: `# Configuration\n\nDocuGen works with zero config, but you can fine-tune every aspect of your site using a JSON file.\n\n\`\`\`json\n{\n  "name": "My Project",\n  "theme": "dark",\n  "primaryColor": "#15803d"\n}\n\`\`\``,
       content: (
         <div className="space-y-6">
           <p className="text-zinc-600 dark:text-zinc-400">DocuGen works with zero config, but you can fine-tune every aspect of your site using a simple configuration file.</p>
@@ -699,7 +797,7 @@ export const ExampleDocs: React.FC<ExampleDocsProps> = ({ theme, isGithubConnect
 {`{
   "name": "My Project",
   "theme": "dark",
-  "primaryColor": "#6366f1",
+  "primaryColor": "#15803d",
   "search": {
     "enabled": true,
     "provider": "ai-semantic"
@@ -722,11 +820,11 @@ export const ExampleDocs: React.FC<ExampleDocsProps> = ({ theme, isGithubConnect
         <div className="space-y-6">
           <p className="text-zinc-600 dark:text-zinc-400">Forget keyword matching. DocuGen uses vector embeddings to understand the "why" behind user queries.</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="p-6 rounded-2xl border border-zinc-200 dark:border-white/5 bg-zinc-100 dark:bg-white/5 group hover:border-indigo-500/30 transition-all shadow-sm">
+            <div className="p-6 rounded-2xl border border-zinc-200 dark:border-white/5 bg-zinc-100 dark:bg-white/5 group hover:border-green-500/30 transition-all shadow-sm">
               <h4 className="font-bold text-zinc-900 dark:text-white mb-2 text-sm">Contextual Understanding</h4>
               <p className="text-xs text-zinc-500 leading-relaxed">The engine understands synonyms and technical relationships across your files, making searches smarter.</p>
             </div>
-            <div className="p-6 rounded-2xl border border-zinc-200 dark:border-white/5 bg-zinc-100 dark:bg-white/5 group hover:border-indigo-500/30 transition-all shadow-sm">
+            <div className="p-6 rounded-2xl border border-zinc-200 dark:border-white/5 bg-zinc-100 dark:bg-white/5 group hover:border-green-500/30 transition-all shadow-sm">
               <h4 className="font-bold text-zinc-900 dark:text-white mb-2 text-sm">Instant Indexing</h4>
               <p className="text-xs text-zinc-500 leading-relaxed">Every time you push code, our AI re-indexes your content in real-time, typically in under 500ms.</p>
             </div>
@@ -750,7 +848,7 @@ export const ExampleDocs: React.FC<ExampleDocsProps> = ({ theme, isGithubConnect
               <div className="aspect-video rounded-lg bg-zinc-200 dark:bg-zinc-800 flex items-center justify-center text-zinc-400 font-bold overflow-hidden shadow-inner">
                  <div className="text-center">
                     <div className="text-xs text-zinc-500 mb-1">OG:IMAGE PREVIEW</div>
-                    <div className="text-indigo-500 text-lg">My Awesome Project</div>
+                    <div className="text-green-600 text-lg">My Awesome Project</div>
                  </div>
               </div>
             </div>
@@ -789,7 +887,7 @@ export const ExampleDocs: React.FC<ExampleDocsProps> = ({ theme, isGithubConnect
               <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Lighthouse Rank</div>
             </div>
             <div className="p-8 rounded-2xl border border-zinc-200 dark:border-white/5 bg-zinc-100 dark:bg-white/5 text-center shadow-sm">
-              <div className="text-4xl font-black text-indigo-500 mb-1">&lt; 100ms</div>
+              <div className="text-4xl font-black text-green-600 mb-1">&lt; 100ms</div>
               <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Edge Latency</div>
             </div>
           </div>
@@ -860,9 +958,9 @@ export const ExampleDocs: React.FC<ExampleDocsProps> = ({ theme, isGithubConnect
             <p className="text-zinc-600 dark:text-zinc-400">Gain actionable insights into what your users are looking for and where they get stuck.</p>
             <div className="grid grid-cols-3 gap-3">
                {[
-                 { label: 'Total Views', val: '12.4k', color: 'text-indigo-500' },
+                 { label: 'Total Views', val: '12.4k', color: 'text-green-600' },
                  { label: 'Avg. Session', val: '4m 12s', color: 'text-emerald-500' },
-                 { label: 'Search Success', val: '94%', color: 'text-blue-500' }
+                 { label: 'Search Success', val: '94%', color: 'text-green-600' }
                ].map(stat => (
                  <div key={stat.label} className="p-4 rounded-xl border border-zinc-100 dark:border-white/5 bg-zinc-50/50 dark:bg-white/5">
                     <div className={`text-lg font-bold ${stat.color}`}>{stat.val}</div>
@@ -882,7 +980,7 @@ export const ExampleDocs: React.FC<ExampleDocsProps> = ({ theme, isGithubConnect
             <p className="text-zinc-600 dark:text-zinc-400">Keep your documentation in sync with your product releases with built-in versioning support.</p>
             <div className="flex items-center gap-2 p-3 rounded-xl bg-zinc-100 dark:bg-zinc-800/50 border border-zinc-200 dark:border-white/5 w-fit">
                 <span className="text-[10px] font-bold text-zinc-500 px-2">VERSION</span>
-                <div className="px-3 py-1 bg-indigo-600 text-white text-[10px] font-bold rounded-lg shadow-lg">v2.4.0 (Latest)</div>
+                <div className="px-3 py-1 bg-green-700 text-white text-[10px] font-bold rounded-lg shadow-lg">v2.4.0 (Latest)</div>
                 <div className="px-3 py-1 bg-zinc-200 dark:bg-zinc-700 text-zinc-600 dark:text-zinc-400 text-[10px] font-bold rounded-lg">v2.3.1</div>
                 <div className="px-3 py-1 bg-zinc-200 dark:bg-zinc-700 text-zinc-600 dark:text-zinc-400 text-[10px] font-bold rounded-lg">v1.x</div>
             </div>
@@ -897,8 +995,8 @@ export const ExampleDocs: React.FC<ExampleDocsProps> = ({ theme, isGithubConnect
         <div className="space-y-6">
           <p className="text-zinc-600 dark:text-zinc-400">Ship internal docs securely. We support industry-standard auth providers out of the box.</p>
           <div className="space-y-4">
-             <div className="flex items-center gap-4 p-5 rounded-2xl border border-zinc-200 dark:border-white/5 bg-zinc-100 dark:bg-white/5 hover:border-indigo-500/30 transition-all shadow-sm">
-                <div className="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-500/10 flex items-center justify-center text-indigo-600 shadow-sm">
+             <div className="flex items-center gap-4 p-5 rounded-2xl border border-zinc-200 dark:border-white/5 bg-zinc-100 dark:bg-white/5 hover:border-green-500/30 transition-all shadow-sm">
+                <div className="w-10 h-10 rounded-xl bg-green-100 dark:bg-green-500/10 flex items-center justify-center text-green-700 shadow-sm">
                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A10.003 10.003 0 0012 20c4.478 0 8.268-2.943 9.542-7H21c-1.105 0-2-.895-2-2V9a2 2 0 00-2-2h-1M12 11V7m0 11v-3m0 0h.01M12 15h3m-3 0h-3" /></svg>
                 </div>
                 <div>
@@ -956,11 +1054,11 @@ export const ExampleDocs: React.FC<ExampleDocsProps> = ({ theme, isGithubConnect
           <p className="text-zinc-600 dark:text-zinc-400 max-w-xl mx-auto">This is exactly what your users will see. Fast, focused, and professional documentation designed for modern engineering teams.</p>
         </div>
 
-        <div className="max-w-6xl mx-auto rounded-[2.5rem] border border-zinc-200 dark:border-white/10 bg-white dark:bg-zinc-900/40 glass overflow-hidden shadow-2xl shadow-indigo-600/5 transition-all duration-500 hover:shadow-indigo-500/10">
+        <div className="max-w-6xl mx-auto rounded-[2.5rem] border border-zinc-200 dark:border-white/10 bg-white dark:bg-zinc-900/40 glass overflow-hidden shadow-2xl shadow-green-700/5 transition-all duration-500 hover:shadow-green-600/10">
           {/* Header */}
           <header className="h-16 border-b border-zinc-200 dark:border-white/5 flex items-center justify-between px-6 bg-white/50 dark:bg-zinc-900/60 backdrop-blur-md">
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 bg-indigo-600 rounded-lg flex items-center justify-center font-bold text-[11px] text-white shadow-lg shadow-indigo-600/20">D</div>
+              <div className="w-7 h-7 bg-green-700 rounded-lg flex items-center justify-center font-bold text-[11px] text-white shadow-lg shadow-green-700/20">D</div>
               <span className="font-bold text-sm text-zinc-900 dark:text-white tracking-tight">DocuGen Docs</span>
             </div>
             
@@ -971,12 +1069,12 @@ export const ExampleDocs: React.FC<ExampleDocsProps> = ({ theme, isGithubConnect
                   placeholder="Ask the docs (AI powered)..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-zinc-100 dark:bg-black/40 border border-zinc-200 dark:border-white/10 rounded-xl px-10 py-2.5 text-xs text-zinc-900 dark:text-zinc-300 focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all placeholder-zinc-500 shadow-inner"
+                  className="w-full bg-zinc-100 dark:bg-black/40 border border-zinc-200 dark:border-white/10 rounded-xl px-10 py-2.5 text-xs text-zinc-900 dark:text-zinc-300 focus:outline-none focus:ring-1 focus:ring-green-500/50 transition-all placeholder-zinc-500 shadow-inner"
                 />
                 <svg className="w-4 h-4 text-zinc-400 dark:text-zinc-600 absolute left-3.5 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                 {isSearching && (
                   <div className="absolute right-3.5 top-3">
-                    <div className="w-3.5 h-3.5 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+                    <div className="w-3.5 h-3.5 border-2 border-green-600 border-t-transparent rounded-full animate-spin" />
                   </div>
                 )}
               </form>
@@ -990,7 +1088,7 @@ export const ExampleDocs: React.FC<ExampleDocsProps> = ({ theme, isGithubConnect
                        onClick={() => { setActivePage(id as DocPage); setSearchQuery(''); }}
                        className="w-full px-5 py-4 text-left hover:bg-zinc-50 dark:hover:bg-white/5 flex flex-col transition-colors border-b border-zinc-100 dark:border-white/5 last:border-0 group"
                      >
-                       <span className="text-xs font-bold text-zinc-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">{data.title}</span>
+                       <span className="text-xs font-bold text-zinc-900 dark:text-white group-hover:text-green-700 dark:group-hover:text-green-400 transition-colors">{data.title}</span>
                        <span className="text-[10px] text-zinc-500">{data.category}</span>
                      </button>
                    ))}
@@ -1028,7 +1126,7 @@ export const ExampleDocs: React.FC<ExampleDocsProps> = ({ theme, isGithubConnect
                           onClick={() => { setActivePage(id as DocPage); setViewMode('rendered'); }}
                           className={`w-full text-left text-sm py-1.5 px-3 rounded-lg transition-all ${
                             activePage === id 
-                              ? 'text-indigo-600 dark:text-indigo-400 font-bold bg-indigo-50 dark:bg-indigo-500/10 shadow-sm' 
+                              ? 'text-green-700 dark:text-green-500 font-bold bg-green-50 dark:bg-green-600/10 shadow-sm' 
                               : 'text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-white/5'
                           }`}
                         >
@@ -1044,7 +1142,7 @@ export const ExampleDocs: React.FC<ExampleDocsProps> = ({ theme, isGithubConnect
             <main className="flex-1 p-8 md:p-16 relative overflow-hidden bg-white dark:bg-transparent">
               <div className="flex justify-between items-center mb-10">
                 <div className="flex items-center gap-2">
-                   <div className="text-xs font-bold text-indigo-600 dark:text-indigo-500 uppercase tracking-wider">{pages[activePage].category}</div>
+                   <div className="text-xs font-bold text-green-700 dark:text-green-500 uppercase tracking-wider">{pages[activePage].category}</div>
                    <span className="text-zinc-300 dark:text-zinc-700">/</span>
                    <div className="text-xs font-medium text-zinc-400 dark:text-zinc-600">{pages[activePage].title}</div>
                    <span className="text-zinc-300 dark:text-zinc-700">/</span>
@@ -1053,13 +1151,13 @@ export const ExampleDocs: React.FC<ExampleDocsProps> = ({ theme, isGithubConnect
                 <div className="flex items-center bg-zinc-100 dark:bg-white/5 rounded-xl p-1 border border-zinc-200 dark:border-white/10 shadow-inner">
                   <button 
                     onClick={() => setViewMode('source')}
-                    className={`px-4 py-1.5 text-[10px] font-bold rounded-lg transition-all ${viewMode === 'source' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20' : 'text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-300'}`}
+                    className={`px-4 py-1.5 text-[10px] font-bold rounded-lg transition-all ${viewMode === 'source' ? 'bg-green-700 text-white shadow-lg shadow-green-700/20' : 'text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-300'}`}
                   >
                     MARKDOWN
                   </button>
                   <button 
                     onClick={() => setViewMode('rendered')}
-                    className={`px-4 py-1.5 text-[10px] font-bold rounded-lg transition-all flex items-center gap-2 ${viewMode === 'rendered' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20' : 'text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-300'}`}
+                    className={`px-4 py-1.5 text-[10px] font-bold rounded-lg transition-all flex items-center gap-2 ${viewMode === 'rendered' ? 'bg-green-700 text-white shadow-lg shadow-green-700/20' : 'text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-300'}`}
                   >
                     <div className={`w-1.5 h-1.5 rounded-full ${viewMode === 'rendered' ? 'bg-white animate-pulse' : 'bg-zinc-400'}`}></div>
                     LIVE PREVIEW
@@ -1079,7 +1177,7 @@ export const ExampleDocs: React.FC<ExampleDocsProps> = ({ theme, isGithubConnect
                     </div>
                   </>
                 ) : (
-                  <div className="bg-zinc-100 dark:bg-black/40 rounded-3xl border border-zinc-200 dark:border-white/5 p-8 font-mono text-sm text-zinc-700 dark:text-indigo-300 overflow-x-auto whitespace-pre-wrap leading-relaxed shadow-inner animate-in slide-in-from-bottom-2 duration-300">
+                  <div className="bg-zinc-100 dark:bg-black/40 rounded-3xl border border-zinc-200 dark:border-white/5 p-8 font-mono text-sm text-zinc-700 dark:text-green-500 overflow-x-auto whitespace-pre-wrap leading-relaxed shadow-inner animate-in slide-in-from-bottom-2 duration-300">
                     {pages[activePage].source}
                   </div>
                 )}

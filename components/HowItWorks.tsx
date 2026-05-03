@@ -47,12 +47,12 @@ export const HowItWorks: React.FC = () => {
           {steps.map((step, idx) => (
             <div 
               key={idx} 
-              className="relative p-8 rounded-3xl border border-zinc-200 dark:border-white/5 bg-white dark:bg-zinc-900/30 transition-all duration-500 ease-out hover:scale-[1.03] hover:-translate-y-2 hover:border-indigo-500/40 hover:shadow-2xl hover:shadow-indigo-500/10 dark:hover:shadow-indigo-500/10 cursor-default group"
+              className="relative p-8 rounded-3xl border border-zinc-200 dark:border-white/5 bg-white dark:bg-zinc-900/30 transition-all duration-500 ease-out hover:scale-[1.03] hover:-translate-y-2 hover:border-green-500/40 hover:shadow-2xl hover:shadow-green-500/10 dark:hover:shadow-green-500/10 cursor-default group"
             >
-              <div className="text-6xl font-black text-zinc-100 dark:text-zinc-800/50 absolute top-4 right-8 group-hover:text-indigo-500/10 transition-colors">
+              <div className="text-6xl font-black text-zinc-100 dark:text-zinc-800/50 absolute top-4 right-8 group-hover:text-green-500/10 transition-colors">
                 {step.number}
               </div>
-              <div className="w-12 h-12 rounded-2xl bg-indigo-600/10 text-indigo-600 dark:text-indigo-500 flex items-center justify-center mb-6">
+              <div className="w-12 h-12 rounded-2xl bg-green-600/10 text-green-700 dark:text-green-500 flex items-center justify-center mb-6">
                 {step.icon}
               </div>
               <h3 className="text-xl font-bold mb-4 text-zinc-900 dark:text-white">{step.title}</h3>

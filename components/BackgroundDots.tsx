@@ -19,8 +19,8 @@ export const BackgroundDots: React.FC<DotProps> = ({ count = 250, theme }) => {
     }));
   }, [count]);
 
-  const dotColor = theme === 'dark' ? 'bg-indigo-50' : 'bg-indigo-400';
-  const shadowColor = theme === 'dark' ? 'rgba(255,255,255,0.6)' : 'rgba(99,102,241,0.2)';
+  const dotColor = theme === 'dark' ? 'bg-green-50' : 'bg-green-400';
+  const shadowColor = theme === 'dark' ? 'rgba(255,255,255,0.6)' : 'rgba(34,197,94,0.2)';
 
   return (
     <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden">
